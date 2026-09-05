@@ -46,12 +46,11 @@
 			<artifactId>angus-mail</artifactId>
 			<version>2.0.3</version>
 		</dependency>
-		<!-- Source: https://mvnrepository.com/artifact/opensymphony/sitemesh -->
+		<!-- SiteMesh 3 (Jakarta EE 9/10/11) -->
 		<dependency>
-			<groupId>opensymphony</groupId>
+			<groupId>org.sitemesh</groupId>
 			<artifactId>sitemesh</artifactId>
-			<version>2.6.0</version>
-			<scope>compile</scope>
+			<version>3.2.1</version>
 		</dependency>
 	</dependencies>
 	<build>
