@@ -22,6 +22,9 @@
         </div>
 
         <div class="form-card-body">
+            <c:if test="${not empty alert}">
+                <div class="alert-error">${alert}</div>
+            </c:if>
             <form action="${pageContext.request.contextPath}/admin/product/edit" method="post" enctype="multipart/form-data">
                 
                 <input type="hidden" name="id" value="${product.id}" />

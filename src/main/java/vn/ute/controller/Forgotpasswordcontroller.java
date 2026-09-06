@@ -8,10 +8,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import vn.ute.model.User;
-import vn.ute.service.Userservice;
 import vn.ute.service.Impl.UserserviceImpl;
+import vn.ute.service.Userservice;
+import vn.ute.util.ValidationUtil;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/forgot-password" })
@@ -26,8 +26,8 @@ public class Forgotpasswordcontroller extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String key = req.getParameter("key");
-		if (key == null || key.trim().isEmpty()) {
+		String key = ValidationUtil.trim(req.getParameter("key"));
+		if (key.isEmpty() || key.length() > 100) {
 			req.setAttribute("alert", "Nhập username hoặc email");
 			req.getRequestDispatcher("/view/forgot-password.jsp").forward(req, resp);
 			return;

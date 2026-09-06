@@ -9,10 +9,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import vn.ute.model.User;
-import vn.ute.service.Userservice;
 import vn.ute.service.Impl.UserserviceImpl;
+import vn.ute.service.Userservice;
+import vn.ute.util.ValidationUtil;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/login" })
@@ -48,7 +48,8 @@ public class Logincontroller extends HttpServlet {
 		String remember = req.getParameter("remember");
 		boolean isRememberMe = "on".equals(remember);
 
-		if (username == null || username.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+		if (!ValidationUtil.isUsername(ValidationUtil.trim(username))
+				|| password == null || password.isEmpty()) {
 			req.setAttribute("alert", "Tài khoản hoặc mật khẩu không được rỗng");
 			req.getRequestDispatcher("/view/login.jsp").forward(req, resp);
 			return;

@@ -9,12 +9,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-
 import vn.ute.model.Product;
 import vn.ute.service.Categoryservice;
-import vn.ute.service.Productservice;
 import vn.ute.service.Impl.CategoryserviceImpl;
 import vn.ute.service.Impl.ProductserviceImpl;
+import vn.ute.service.Productservice;
 import vn.ute.util.UploadUtil;
 
 @SuppressWarnings("serial")
@@ -49,14 +48,36 @@ public class Producteditcontroller extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + "/admin/product/list");
 			return;
 		}
+		String validationError = Productaddcontroller.validate(req);
+		if (validationError != null) {
+			req.setAttribute("alert", validationError);
+			loadFormData(req, idStr);
+			req.getRequestDispatcher("/view/edit-product.jsp").forward(req, resp);
+			return;
+		}
 		Product product = Productaddcontroller.bindProduct(req);
 		product.setId(Integer.parseInt(idStr));
 		Part filePart = req.getPart("image");
+		if (filePart != null && filePart.getSize() > 0 && !UploadUtil.isValidImage(filePart)) {
+			req.setAttribute("alert", "Ảnh phải là PNG, JPG, JPEG hoặc WEBP và không quá 10 MB");
+			loadFormData(req, idStr);
+			req.getRequestDispatcher("/view/edit-product.jsp").forward(req, resp);
+			return;
+		}
 		String stored = UploadUtil.save(filePart, "product");
 		if (stored != null) {
 			product.setImage(stored);
 		}
 		productService.edit(product);
 		resp.sendRedirect(req.getContextPath() + "/admin/product/list");
+	}
+
+	private void loadFormData(HttpServletRequest req, String id) {
+		try {
+			Product product = productService.get(Integer.parseInt(id));
+			req.setAttribute("product", product);
+			req.setAttribute("categories", cateService.getAll());
+		} catch (NumberFormatException ignored) {
+		}
 	}
 }

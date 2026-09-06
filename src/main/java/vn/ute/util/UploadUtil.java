@@ -7,6 +7,24 @@ import jakarta.servlet.http.Part;
 
 public class UploadUtil {
 
+	public static boolean isValidImage(Part part) {
+		if (part == null || part.getSize() <= 0 || part.getSize() > 10 * 1024 * 1024) {
+			return false;
+		}
+		String fileName = part.getSubmittedFileName();
+		if (fileName == null || fileName.isBlank()
+				|| part.getContentType() == null || !part.getContentType().startsWith("image/")) {
+			return false;
+		}
+		int index = fileName.lastIndexOf('.');
+		if (index < 0) {
+			return false;
+		}
+		String extension = fileName.substring(index + 1).toLowerCase();
+		return extension.equals("png") || extension.equals("jpg")
+				|| extension.equals("jpeg") || extension.equals("webp");
+	}
+
 	public static String save(Part part, String folder) throws IOException {
 		if (part == null || part.getSize() <= 0) {
 			return null;

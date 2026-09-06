@@ -8,9 +8,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import vn.ute.service.Userservice;
 import vn.ute.service.Impl.UserserviceImpl;
+import vn.ute.service.Userservice;
+import vn.ute.util.ValidationUtil;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/reset-password" })
@@ -39,8 +39,13 @@ public class Resetpasswordcontroller extends HttpServlet {
 
 		String password = req.getParameter("password");
 		String confirm = req.getParameter("confirm");
-		if (password == null || password.isEmpty() || !password.equals(confirm)) {
-			req.setAttribute("alert", "Mật khẩu không khớp hoặc để trống");
+		if (!ValidationUtil.isPassword(password)) {
+			req.setAttribute("alert", "Mật khẩu phải dài từ 6 đến 100 ký tự");
+			req.getRequestDispatcher("/view/reset-password.jsp").forward(req, resp);
+			return;
+		}
+		if (!password.equals(confirm)) {
+			req.setAttribute("alert", "Mật khẩu xác nhận không khớp");
 			req.getRequestDispatcher("/view/reset-password.jsp").forward(req, resp);
 			return;
 		}

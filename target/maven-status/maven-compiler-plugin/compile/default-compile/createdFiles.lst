@@ -28,6 +28,8 @@ vn\ute\controller\Productcontroller.class
 vn\ute\util\UploadUtil.class
 vn\ute\controller\Forgotpasswordcontroller.class
 vn\ute\DAO\Impl\CategoryDAOImpl.class
+vn\ute\filter\NoCacheFilter.class
+vn\ute\util\ValidationUtil.class
 vn\ute\service\Productservice.class
 vn\ute\DAO\CategoryDAO.class
 vn\ute\util\OtpUtil.class

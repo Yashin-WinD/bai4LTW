@@ -8,10 +8,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import vn.ute.model.User;
-import vn.ute.service.Userservice;
 import vn.ute.service.Impl.UserserviceImpl;
+import vn.ute.service.Userservice;
+import vn.ute.util.ValidationUtil;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/verify-otp" })
@@ -49,6 +49,11 @@ public class Verifyotpcontroller extends HttpServlet {
 		}
 
 		String otp = req.getParameter("otp");
+		if (!ValidationUtil.isOtp(otp)) {
+			req.setAttribute("alert", "OTP phải gồm đúng 6 chữ số");
+			req.getRequestDispatcher("/view/verify-otp.jsp").forward(req, resp);
+			return;
+		}
 		if ("REGISTER".equals(purpose)) {
 			if (userService.verifyActivateOtp(otpUser, otp)) {
 				session.removeAttribute("otpUser");

@@ -12,6 +12,8 @@
            class="${fn:contains(pageContext.request.servletPath, '/category') ? 'active' : ''}">Danh mục</a>
         <a href="${pageContext.request.contextPath}/admin/product/list"
            class="${fn:contains(pageContext.request.servletPath, '/product') ? 'active' : ''}">Sản phẩm</a>
+          <a href="${pageContext.request.contextPath}/admin/product/add"
+              class="${fn:contains(pageContext.request.servletPath, '/product/add') ? 'active' : ''}">Thêm sản phẩm</a>
     </div>
     <div class="spacer"></div>
     <div class="admin-user">

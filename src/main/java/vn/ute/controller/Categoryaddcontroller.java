@@ -10,11 +10,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-
 import vn.ute.model.Category;
 import vn.ute.service.Categoryservice;
 import vn.ute.service.Impl.CategoryserviceImpl;
 import vn.ute.util.Constant;
+import vn.ute.util.UploadUtil;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/admin/category/add" })
@@ -41,13 +41,23 @@ public class Categoryaddcontroller extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String name = req.getParameter("name");
+        if (name == null || name.trim().isEmpty() || name.trim().length() > 100) {
+            req.setAttribute("alert", "Tên danh mục bắt buộc và tối đa 100 ký tự");
+            req.getRequestDispatcher("/view/add-category.jsp").forward(req, resp);
+            return;
+        }
         Category category = new Category();
         
-        category.setCatename(name);
+        category.setCatename(name.trim());
 
 
         Part filePart = req.getPart("icon");
         if (filePart != null && filePart.getSize() > 0) {
+            if (!UploadUtil.isValidImage(filePart)) {
+                req.setAttribute("alert", "Ảnh phải là PNG, JPG, JPEG hoặc WEBP và không quá 10 MB");
+                req.getRequestDispatcher("/view/add-category.jsp").forward(req, resp);
+                return;
+            }
             String originalFileName = filePart.getSubmittedFileName();
             if (originalFileName != null && !originalFileName.isEmpty()) {
                 int index = originalFileName.lastIndexOf(".");

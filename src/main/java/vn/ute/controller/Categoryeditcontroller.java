@@ -10,11 +10,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-
 import vn.ute.model.Category;
 import vn.ute.service.Categoryservice;
 import vn.ute.service.Impl.CategoryserviceImpl;
 import vn.ute.util.Constant;
+import vn.ute.util.UploadUtil;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/admin/category/edit" })
@@ -52,7 +52,13 @@ public class Categoryeditcontroller extends HttpServlet {
             return;
         }
 
-        int id = Integer.parseInt(idStr);
+        int id;
+        try {
+            id = Integer.parseInt(idStr);
+        } catch (NumberFormatException e) {
+            resp.sendRedirect(req.getContextPath() + "/admin/category/list");
+            return;
+        }
         String name = req.getParameter("name");
 
         Category category = cateService.get(id);
@@ -60,11 +66,23 @@ public class Categoryeditcontroller extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/admin/category/list");
             return;
         }
+        if (name == null || name.trim().isEmpty() || name.trim().length() > 100) {
+            req.setAttribute("category", category);
+            req.setAttribute("alert", "Tên danh mục bắt buộc và tối đa 100 ký tự");
+            req.getRequestDispatcher("/view/edit-category.jsp").forward(req, resp);
+            return;
+        }
 
-        category.setCatename(name);
+        category.setCatename(name.trim());
 
         Part filePart = req.getPart("icon");
         if (filePart != null && filePart.getSize() > 0) {
+            if (!UploadUtil.isValidImage(filePart)) {
+                req.setAttribute("category", category);
+                req.setAttribute("alert", "Ảnh phải là PNG, JPG, JPEG hoặc WEBP và không quá 10 MB");
+                req.getRequestDispatcher("/view/edit-category.jsp").forward(req, resp);
+                return;
+            }
             String originalFileName = filePart.getSubmittedFileName();
             if (originalFileName != null && !originalFileName.isEmpty()) {
                 int index = originalFileName.lastIndexOf(".");

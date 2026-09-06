@@ -8,10 +8,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import vn.ute.model.User;
-import vn.ute.service.Userservice;
 import vn.ute.service.Impl.UserserviceImpl;
+import vn.ute.service.Userservice;
+import vn.ute.util.ValidationUtil;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/register" })
@@ -26,15 +26,30 @@ public class Registercontroller extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String username = trim(req.getParameter("username"));
-		String email = trim(req.getParameter("email"));
-		String fullName = trim(req.getParameter("fullName"));
+		String username = ValidationUtil.trim(req.getParameter("username"));
+		String email = ValidationUtil.trim(req.getParameter("email"));
+		String fullName = ValidationUtil.trim(req.getParameter("fullName"));
 		String password = req.getParameter("password");
 		String confirm = req.getParameter("confirm");
-		String phone = trim(req.getParameter("phone"));
+		String phone = ValidationUtil.trim(req.getParameter("phone"));
 
-		if (username.isEmpty() || email.isEmpty() || password == null || password.isEmpty()) {
-			req.setAttribute("alert", "Vui lòng nhập đầy đủ username, email và mật khẩu");
+		if (!ValidationUtil.isUsername(username)) {
+			req.setAttribute("alert", "Username gồm 3-30 ký tự: chữ, số, dấu chấm, gạch ngang hoặc gạch dưới");
+			req.getRequestDispatcher("/view/register.jsp").forward(req, resp);
+			return;
+		}
+		if (!ValidationUtil.isEmail(email)) {
+			req.setAttribute("alert", "Email không đúng định dạng");
+			req.getRequestDispatcher("/view/register.jsp").forward(req, resp);
+			return;
+		}
+		if (!ValidationUtil.isPhone(phone)) {
+			req.setAttribute("alert", "Số điện thoại phải có 10-11 chữ số và bắt đầu bằng 0");
+			req.getRequestDispatcher("/view/register.jsp").forward(req, resp);
+			return;
+		}
+		if (!ValidationUtil.isPassword(password)) {
+			req.setAttribute("alert", "Mật khẩu phải dài từ 6 đến 100 ký tự");
 			req.getRequestDispatcher("/view/register.jsp").forward(req, resp);
 			return;
 		}
@@ -70,7 +85,4 @@ public class Registercontroller extends HttpServlet {
 		req.getRequestDispatcher("/view/verify-otp.jsp").forward(req, resp);
 	}
 
-	private String trim(String value) {
-		return value == null ? "" : value.trim();
-	}
 }

@@ -25,6 +25,9 @@
 		</div>
 
 		<div class="form-card-body">
+			<c:if test="${not empty alert}">
+				<div class="alert-error">${alert}</div>
+			</c:if>
 			<form action="${pageContext.request.contextPath}/admin/category/edit"
 				method="post" enctype="multipart/form-data">
 
