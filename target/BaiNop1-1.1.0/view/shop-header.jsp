@@ -6,7 +6,7 @@
     <nav class="nav">
         <a href="${pageContext.request.contextPath}/home">Trang chủ</a>
         <a href="${pageContext.request.contextPath}/product">Sản phẩm</a>
-        <c:if test="${sessionScope.account.roleId == 1 || sessionScope.account.roleId == 2}">
+        <c:if test="${not empty sessionScope.account and (sessionScope.account.roleId == 1 || sessionScope.account.roleId == 2)}">
             <a href="${pageContext.request.contextPath}/admin/category/list">Danh mục</a>
             <a href="${pageContext.request.contextPath}/admin/product/list">Quản lý SP</a>
         </c:if>

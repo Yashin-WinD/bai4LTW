@@ -1,16 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chỉnh sửa sản phẩm — UTE Admin</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/shop.css">
-</head>
-<body style="background: #f1f5f9; min-height: 100vh;">
 
-<jsp:include page="/view/admin-nav.jsp"/>
+<title>Chỉnh sửa sản phẩm — UTE Admin</title>
 
 <div class="admin-wrapper" style="max-width: 800px;">
     <div class="breadcrumb">
@@ -117,5 +108,4 @@
     }
 </script>
 
-</body>
-</html>
+

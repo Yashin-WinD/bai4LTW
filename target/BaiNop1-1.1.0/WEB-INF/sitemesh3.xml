@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+
+    <mapping path="/admin/*"
+             decorator="bootstrap.html" />
+
+    <mapping path="/manager/*"
+             decorator="bootstrap.html" />
+
+    <mapping path="/*"
+             decorator="bootstrap.html" />
+
+    <mapping path="/api/*"
+             exclude="true" />
+
+    <mapping path="/css/*"
+             exclude="true" />
+
+    <mapping path="/image*"
+             exclude="true" />
+
+</sitemesh>

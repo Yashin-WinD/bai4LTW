@@ -6,7 +6,6 @@ vn\ute\model\User.class
 vn\ute\model\Category.class
 vn\ute\DAO\Impl\UserDAOImpl.class
 vn\ute\controller\Logincontroller.class
-vn\ute\filter\EncodingFilter.class
 vn\ute\controller\Downloadimagecontroller.class
 vn\ute\controller\Logoutcontroller.class
 vn\ute\controller\Resetpasswordcontroller.class
@@ -37,7 +36,6 @@ vn\ute\controller\Categoryaddcontroller.class
 vn\ute\service\Impl\CategoryserviceImpl.class
 vn\ute\controller\Productdeletecontroller.class
 vn\ute\DAO\UserDAO.class
-vn\ute\filter\AuthFilter.class
 vn\ute\model\Product.class
 vn\ute\DAO\ProductDAO.class
 vn\ute\config\JPAConfig.class
