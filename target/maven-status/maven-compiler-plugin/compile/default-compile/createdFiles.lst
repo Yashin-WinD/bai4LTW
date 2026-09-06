@@ -17,6 +17,7 @@ vn\ute\service\Impl\ProductserviceImpl.class
 vn\ute\controller\Categorycontroller.class
 vn\ute\controller\Categoryeditcontroller.class
 vn\ute\controller\Producteditcontroller.class
+vn\ute\controller\Profilecontroller.class
 vn\ute\controller\Homecontroller.class
 vn\ute\controller\Waitingcontroller.class
 vn\ute\controller\Verifyotpcontroller.class

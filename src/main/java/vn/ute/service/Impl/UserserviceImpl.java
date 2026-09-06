@@ -3,8 +3,8 @@ package vn.ute.service.Impl;
 import java.sql.Date;
 import java.util.Calendar;
 
-import vn.ute.DAO.UserDAO;
 import vn.ute.DAO.Impl.UserDAOImpl;
+import vn.ute.DAO.UserDAO;
 import vn.ute.model.User;
 import vn.ute.service.Userservice;
 import vn.ute.util.Constant;
@@ -97,6 +97,11 @@ public class UserserviceImpl implements Userservice {
 		user.setOtpExpire(null);
 		userDao.update(user);
 		return true;
+	}
+
+	@Override
+	public void updateProfile(User user) {
+		userDao.update(user);
 	}
 
 	private boolean otpValid(User user, String otp) {

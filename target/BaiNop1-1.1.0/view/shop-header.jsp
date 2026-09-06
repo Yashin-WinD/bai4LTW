@@ -10,6 +10,9 @@
             <a href="${pageContext.request.contextPath}/admin/category/list">Danh mục</a>
             <a href="${pageContext.request.contextPath}/admin/product/list">Quản lý SP</a>
         </c:if>
+        <c:if test="${not empty sessionScope.account}">
+            <a href="${pageContext.request.contextPath}/member/myaccount">Hồ sơ</a>
+        </c:if>
     </nav>
     <div class="header-user">
         <c:choose>

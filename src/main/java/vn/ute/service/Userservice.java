@@ -18,4 +18,6 @@ public interface Userservice {
 	boolean verifyForgotOtp(String emailOrUsername, String otp);
 
 	boolean resetPassword(String emailOrUsername, String newPassword);
+
+	void updateProfile(User user);
 }
